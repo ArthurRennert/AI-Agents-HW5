@@ -52,7 +52,7 @@ Storage: NVMe SSD
 
 ## Model Candidate
 
-Qwen3-32B
+Qwen2.5-32B-Instruct
 
 ## Risks
 

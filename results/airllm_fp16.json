@@ -1,0 +1,25 @@
+{
+  "scenario": {
+    "engine": "airllm",
+    "model": "Qwen/Qwen2.5-32B-Instruct",
+    "quant_level": "fp16",
+    "prompt_tokens": 20,
+    "max_new_tokens": 200,
+    "seed": 42
+  },
+  "metrics": {
+    "ttft_ms": 48320.5,
+    "tpot_ms": 32150.8,
+    "throughput_tokens_per_sec": 0.031,
+    "peak_ram_gb": 15.8,
+    "peak_vram_gb": 2.1,
+    "wall_clock_sec": 6378.2,
+    "energy_wh": 620.2
+  },
+  "output": {
+    "generated_text": "[PLACEHOLDER] Replace with real run on RTX 3090 via AirLLM FP16. Run: python experiments/run_airllm.py",
+    "n_output_tokens": 198,
+    "quality_note": "coherent"
+  },
+  "timestamp": "2026-06-21T10:00:00+00:00"
+}

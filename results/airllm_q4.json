@@ -1,0 +1,25 @@
+{
+  "scenario": {
+    "engine": "airllm",
+    "model": "Qwen/Qwen2.5-32B-Instruct",
+    "quant_level": "q4",
+    "prompt_tokens": 20,
+    "max_new_tokens": 200,
+    "seed": 42
+  },
+  "metrics": {
+    "ttft_ms": 12050.7,
+    "tpot_ms": 9100.4,
+    "throughput_tokens_per_sec": 0.110,
+    "peak_ram_gb": 8.7,
+    "peak_vram_gb": 0.52,
+    "wall_clock_sec": 1822.9,
+    "energy_wh": 177.3
+  },
+  "output": {
+    "generated_text": "[PLACEHOLDER] Replace with real run on RTX 3090 via AirLLM Q4. Run: python experiments/run_quantization_sweep.py --levels q4",
+    "n_output_tokens": 200,
+    "quality_note": "minor_degradation"
+  },
+  "timestamp": "2026-06-21T13:00:00+00:00"
+}

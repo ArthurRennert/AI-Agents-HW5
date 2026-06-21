@@ -1,0 +1,17 @@
+{
+  "api_provider": "OpenAI GPT-4o",
+  "api_price_date": "2026-06-21",
+  "api_input_usd_per_m_tokens": 2.5,
+  "api_output_usd_per_m_tokens": 10.0,
+  "workload_prompt_tokens": 20,
+  "workload_output_tokens": 200,
+  "api_cost_per_request_usd": 0.00205,
+  "onprem_energy_kwh_per_request": 0.177226,
+  "onprem_variable_usd_per_request": 0.021267,
+  "onprem_capex_monthly_usd": 41.67,
+  "onprem_gpu_cost_usd": 1500.0,
+  "onprem_amortization_years": 3.0,
+  "onprem_electricity_usd_per_kwh": 0.12,
+  "break_even_requests_per_month": null,
+  "conclusion": "AirLLM on-prem is not cost-optimal vs API due to energy inefficiency of layer-paging. On-prem advantage is privacy and data sovereignty."
+}

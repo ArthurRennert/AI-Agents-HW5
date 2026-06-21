@@ -116,16 +116,16 @@
 
 | # | Task | Priority | Status | Owner | Definition of Done |
 |---|------|----------|--------|-------|--------------------|
-| 4.1 | Count input + output tokens per workload run | P0 | Not Started | Both | Token counts recorded in every `results/*.json` |
-| 4.2 | Compute API cost/request using real provider price (cite provider + date) | P0 | Not Started | Both | Cost formula and result documented; provider + price cited with retrieval date |
-| 4.3 | Compute on-prem CAPEX amortized + OPEX (electricity) cost/request | P0 | Not Started | Both | Amortization formula + electricity rate stated; all assumptions made explicit |
-| 4.4 | Plot break-even: cumulative cost vs volume for API and On-Prem | P0 | Not Started | Both | `figures/break_even.png` produced; crossover point labelled |
-| 4.5 | Note context caching (PagedAttention) effect on API break-even | P1 | Not Started | Both | Short paragraph in report explaining shift in break-even for repeated-context workloads |
-| 4.6 | Write recommendation: when API wins, when On-Prem wins; include privacy/data-security argument | P0 | Not Started | Both | Recommendation section in report addresses both cost and privacy dimensions |
-| 4.7 | Prefill vs Decode analysis tied to actual TTFT vs TPOT measurements | P0 | Not Started | Both | Written explanation in report connects TTFT to compute-bound prefill and TPOT to memory-bandwidth-bound decode |
-| 4.8 | AirLLM-as-paging concept analysis: map layer loading to mmap, page table, page faults, locality | P0 | Not Started | Both | Concept analysis in report connects SafeTensors flat buffer → zero-copy mmap → fast layer loads |
-| 4.9 | VRAM/RAM bottleneck and quantization effects analysis tied to results | P0 | Not Started | Both | FP32→FP16→Q4→Q2 effects on memory/speed/quality explained from actual data |
-| 4.10 | Concept → demonstration map table | P0 | Not Started | Both | Table in report maps each L08 concept to the exact section/figure where it is shown |
+| 4.1 | Count input + output tokens per workload run | P0 | Done | Both | `prompt_tokens` and `n_output_tokens` recorded in every `results/*.json`; loaded by `run_economics.py` |
+| 4.2 | Compute API cost/request using real provider price (cite provider + date) | P0 | Done | Both | GPT-4o: $2.50/M input + $10.00/M output (2026-06-21); cost=$0.002050/request; `src/economics/costs.py` |
+| 4.3 | Compute on-prem CAPEX amortized + OPEX (electricity) cost/request | P0 | Done | Both | RTX 3090 $1500/36mo=$41.67/mo CAPEX + $0.02127/req electricity; `results/economics.json` |
+| 4.4 | Plot break-even: cumulative cost vs volume for API and On-Prem | P0 | Done | Both | `figures/break_even.png` — no break-even exists (AirLLM energy > API per-token cost); annotated |
+| 4.5 | Note context caching (PagedAttention) effect on API break-even | P1 | Done | Both | `reports/concept_analysis.md` §4.5 — PagedAttention shared prefix caching reduces API cost 61% for repeated context |
+| 4.6 | Write recommendation: when API wins, when On-Prem wins; include privacy/data-security argument | P0 | Done | Both | `reports/concept_analysis.md` §4.6 — cost, privacy, GDPR, volume thresholds all addressed |
+| 4.7 | Prefill vs Decode analysis tied to actual TTFT vs TPOT measurements | P0 | Done | Both | `reports/concept_analysis.md` §4.7 — GEMM/GEMV, compute-bound vs. memory-BW-bound, tied to measured TTFT/TPOT table |
+| 4.8 | AirLLM-as-paging concept analysis: map layer loading to mmap, page table, page faults, locality | P0 | Done | Both | `reports/concept_analysis.md` §4.8 — full analogy table + SafeTensors flat-buffer mmap explanation |
+| 4.9 | VRAM/RAM bottleneck and quantization effects analysis tied to results | P0 | Done | Both | `reports/concept_analysis.md` §4.9 — FP16/Q8/Q4/Q2 effects on VRAM/TPOT/quality from data; red line at Q2 |
+| 4.10 | Concept → demonstration map table | P0 | Done | Both | `reports/concept_analysis.md` §4.10 — 16-row table mapping every L08 concept to file/figure/section |
 
 ---
 

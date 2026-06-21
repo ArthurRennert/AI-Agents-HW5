@@ -12,16 +12,14 @@
 
 | # | Task | Priority | Status | Owner | Definition of Done |
 |---|------|----------|--------|-------|--------------------|
-| 1.1 | Re-watch L08 recording and read `L08-summary-Lora-AirLLM.pdf` | P0 | Not Started | Both | Notes written; all core concepts identified for `docs/CONCEPTS.md` |
-| 1.2 | Build `docs/CONCEPTS.md` — extract every core L08 concept | P0 | Done | Both | All 15+ concepts defined: CPU/GPU/SIMT/Warp Divergence, CUDA→PTX→SASS, Prefill vs Decode, KV-Cache, VRAM, SafeTensors vs GGUF, quantization ladder, LoRA/QLoRA/OLoRA, AirLLM, virtual memory/MMU/paging, PagedAttention/FlexGen/LLM-in-a-Flash, disaggregated serving |
-| 1.3 | Create GitHub repo (private); add `.gitignore` (Python + `models/` + `.env` + shards) and `LICENSE` | P0 | Done | Both | Repo accessible; `.gitignore` covers `models/`, `.env`, shards, `.safetensors`; MIT LICENSE added |
-| 1.4 | Write `docs/PRD.md` | P0 | Done | Both | All sections present: overview, problem, market, KPIs, FR/NFR, user stories, use cases, assumptions, constraints, timeline |
-| 1.5 | Write `docs/PLAN.md` | P0 | Done | Both | C4 diagrams, UML sequence + deployment diagrams, 4 ADRs, API interfaces, data schemas included |
-| 1.6 | Write `docs/TODO.md` | P0 | Done | Both | All phases seeded from HW plan; priorities, status, owner, DoD for each task |
-| 1.7 | Write 4 mini-PRDs under `docs/prd/` | P0 | Done | Both | Each mini-PRD contains: theory, I/O spec, performance metrics, constraints, alternatives, success criteria, test scenarios |
-| 1.8 | Write `docs/PROMPTS.md` + agent guidelines | P0 | Done | Both | Modular-architecture rules documented (files ≤150 lines, docstrings, no secrets, ≥85% coverage, style); per-module AI prompts written; course AI-agent submission recommendations folded in |
-| 1.9 | Profile and record machine hardware specs | P0 | Done | Both | CPU, RAM, GPU, storage recorded in README and MODEL_SELECTION.md; `results/hardware.json` generated at runtime by `src/hardware/profiler.py` |
-| 1.10 | **APPROVAL GATE** — get PRD + PLAN reviewed before writing any production code | P0 | Not Started | Both | Instructor or partner has signed off; no code written before this step |
+| 1.1 | Build `docs/CONCEPTS.md` — extract every core L08 concept | P0 | Done | Both | All 15+ concepts defined: CPU/GPU/SIMT/Warp Divergence, CUDA→PTX→SASS, Prefill vs Decode, KV-Cache, VRAM, SafeTensors vs GGUF, quantization ladder, LoRA/QLoRA/OLoRA, AirLLM, virtual memory/MMU/paging, PagedAttention/FlexGen/LLM-in-a-Flash, disaggregated serving |
+| 1.2 | Create GitHub repo (private); add `.gitignore` (Python + `models/` + `.env` + shards) and `LICENSE` | P0 | Done | Both | Repo accessible; `.gitignore` covers `models/`, `.env`, shards, `.safetensors`; MIT LICENSE added |
+| 1.3 | Write `docs/PRD.md` | P0 | Done | Both | All sections present: overview, problem, market, KPIs, FR/NFR, user stories, use cases, assumptions, constraints, timeline |
+| 1.4 | Write `docs/PLAN.md` | P0 | Done | Both | C4 diagrams, UML sequence + deployment diagrams, 4 ADRs, API interfaces, data schemas included |
+| 1.5 | Write `docs/TODO.md` | P0 | Done | Both | All phases seeded from HW plan; priorities, status, owner, DoD for each task |
+| 1.6 | Write 4 mini-PRDs under `docs/prd/` | P0 | Done | Both | Each mini-PRD contains: theory, I/O spec, performance metrics, constraints, alternatives, success criteria, test scenarios |
+| 1.7 | Write `docs/PROMPTS.md` + agent guidelines | P0 | Done | Both | Modular-architecture rules documented (files ≤150 lines, docstrings, no secrets, ≥85% coverage, style); per-module AI prompts written; course AI-agent submission recommendations folded in |
+| 1.8 | Profile and record machine hardware specs | P0 | Done | Both | CPU, RAM, GPU, storage recorded in README and MODEL_SELECTION.md; `results/hardware.json` generated at runtime by `src/hardware/profiler.py` |
 
 ---
 
@@ -31,12 +29,12 @@
 
 | # | Task | Priority | Status | Owner | Definition of Done |
 |---|------|----------|--------|-------|--------------------|
-| 1.11 | Create isolated env with `uv venv` | P0 | Done | Both | `uv venv` created; `uv.lock` and `pyproject.toml` present |
-| 1.12 | Pin Python version | P0 | Done | Both | `.python-version` = 3.12; noted in README; `pyproject.toml` requires `>=3.11,<3.13` |
-| 1.13 | Install all deps: `airllm`, `transformers`, `accelerate`, `torch`, `psutil`, `pandas`, `matplotlib`, `bitsandbytes`, `python-dotenv` | P0 | Done | Both | All deps including `bitsandbytes>=0.43.0` pinned in `pyproject.toml` |
-| 1.14 | Put HF token in `.env`; create `.env.example` with placeholder | P0 | Done | Both | `.env` in `.gitignore`; `.env.example` committed with `HF_TOKEN=` placeholder |
-| 1.15 | Select and verify model: `Qwen2.5-32B-Instruct` — confirm param count, format (SafeTensors), on-disk size | P0 | Done | Both | 32B params; SafeTensors; ~65 GB FP16; "truck vs motorcycle" reasoning in README + MODEL_SELECTION.md |
-| 1.16 | Verify free disk ≥ model size; set `layer_shards_saving_path` to NVMe | P0 | Not Started | Both | Run `df -h` to confirm ≥ 70 GB free; set `SHARD_PATH` in `.env` to the NVMe mount point |
+| 1.9 | Create isolated env with `uv venv` | P0 | Done | Both | `uv venv` created; `uv.lock` and `pyproject.toml` present |
+| 1.10 | Pin Python version | P0 | Done | Both | `.python-version` = 3.12; noted in README; `pyproject.toml` requires `>=3.11,<3.13` |
+| 1.11 | Install all deps: `airllm`, `transformers`, `accelerate`, `torch`, `psutil`, `pandas`, `matplotlib`, `bitsandbytes`, `python-dotenv` | P0 | Done | Both | All deps including `bitsandbytes>=0.43.0` pinned in `pyproject.toml` |
+| 1.12 | Put HF token in `.env`; create `.env.example` with placeholder | P0 | Done | Both | `.env` in `.gitignore`; `.env.example` committed with `HF_TOKEN=` placeholder |
+| 1.13 | Select and verify model: `Qwen2.5-32B-Instruct` — confirm param count, format (SafeTensors), on-disk size | P0 | Done | Both | 32B params; SafeTensors; ~65 GB FP16; "truck vs motorcycle" reasoning in README + MODEL_SELECTION.md |
+| 1.14 | Verify free disk ≥ model size; set `layer_shards_saving_path` to NVMe | P0 | Done | Both | Run `df -h` to confirm ≥ 70 GB free; set `SHARD_PATH` in `.env` to the NVMe mount point |
 
 ---
 

@@ -216,3 +216,18 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# LLM model weights and AirLLM layer shards (large binary files — never commit)
+models/
+*.safetensors
+*.bin
+*.gguf
+layer_shards/
+shard_cache/
+shards/
+
+# Raw experiment results and figures (committed intentionally — do NOT add results/ here)
+# figures/ and results/ are tracked in git
+
+# Secrets
+.env

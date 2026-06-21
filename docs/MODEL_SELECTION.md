@@ -13,9 +13,10 @@ Qwen2.5-32B-Instruct
 
 ## Hardware Used
 
-* GPU: NVIDIA RTX 3090 (24GB VRAM)
-* CPU: AMD Ryzen 9 5950X
-* RAM: 32GB
+* GPU: NVIDIA RTX 3090 (24 GB VRAM)
+* CPU: AMD Ryzen 9 5950X (16 cores / 32 threads)
+* RAM: 128 GB DDR4
+* Storage: NVMe SSD
 
 ## Reasoning
 

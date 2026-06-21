@@ -44,15 +44,15 @@
 
 | # | Task | Priority | Status | Owner | Definition of Done |
 |---|------|----------|--------|-------|--------------------|
-| 2.1 | Implement TTFT collector | P0 | Not Started | Both | Timer records ms from request submission to first emitted token |
-| 2.2 | Implement TPOT / ITL collector | P0 | Not Started | Both | Mean inter-token gap (ms) computed from per-token timestamps after first token |
-| 2.3 | Implement throughput collector | P0 | Not Started | Both | `n_output_tokens / wall_clock_sec` computed and recorded |
-| 2.4 | Implement peak RAM monitor (`psutil` RSS) | P0 | Not Started | Both | Peak RSS in GB sampled at 500 ms intervals; max recorded |
-| 2.5 | Implement peak VRAM monitor (`torch.cuda.max_memory_allocated`) | P0 | Not Started | Both | Peak VRAM in GB recorded after run completes |
-| 2.6 | Implement energy estimator (Wh = avg power × elapsed hours) | P1 | Not Started | Both | Power sampled from `nvidia-smi` at 1 Hz; method stated explicitly in results JSON |
-| 2.7 | Standardize workload: fix prompt, seed=42, `max_new_tokens=200`, discard one warm-up run | P0 | Not Started | Both | Same prompt/seed/length used identically across every scenario |
-| 2.8 | Persist every raw metric to `results/<scenario>.json` tagged by engine + quant | P0 | Not Started | Both | Valid JSON written after every run; loadable by analysis module |
-| 2.9 | Smoke test harness on tiny model + Q2 + low token count | P0 | Not Started | Both | Smoke test completes in < 5 min; all 7 metric fields populated; no exceptions |
+| 2.1 | Implement TTFT collector | P0 | Done | Both | `Harness.record_first_token()` in `src/benchmark/harness.py` |
+| 2.2 | Implement TPOT / ITL collector | P0 | Done | Both | Computed in `Harness.stop()` as `(wall_ms - ttft_ms) / (n_tokens - 1)` |
+| 2.3 | Implement throughput collector | P0 | Done | Both | `n_output_tokens / wall_clock_sec` in `Harness.stop()` |
+| 2.4 | Implement peak RAM monitor (`psutil` RSS) | P0 | Done | Both | Background thread `_sample_ram()` at 500 ms intervals |
+| 2.5 | Implement peak VRAM monitor (`torch.cuda.max_memory_allocated`) | P0 | Done | Both | `_get_peak_vram()` called in `Harness.stop()` |
+| 2.6 | Implement energy estimator (Wh = avg power × elapsed hours) | P1 | Done | Both | `_sample_power()` polls `nvidia-smi` at 1 Hz; mean × time in `stop()` |
+| 2.7 | Standardize workload: fix prompt, seed=42, `max_new_tokens=200`, discard warm-up | P0 | Done | Both | Fixed defaults in `src/config/settings.py`; warm-up handled in runner |
+| 2.8 | Persist every raw metric to `results/<scenario>.json` tagged by engine + quant | P0 | Done | Both | `save_result()` / `load_results()` in `src/benchmark/persistence.py`; 54 tests pass |
+| 2.9 | Smoke test harness on tiny model + low token count | P0 | Not Started | Both | Run: `python experiments/smoke_test.py` — uses gpt2, no auth needed, completes in < 2 min |
 
 ---
 

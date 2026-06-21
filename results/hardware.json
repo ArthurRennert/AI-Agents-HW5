@@ -1,0 +1,10 @@
+{
+  "cpu_model": "Intel64 Family 6 Model 154 Stepping 4, GenuineIntel",
+  "cpu_cores": 10,
+  "cpu_threads": 12,
+  "ram_gb": 16.8,
+  "gpu_model": "none",
+  "vram_gb": 0.0,
+  "storage_type": "NVMe/SSD",
+  "free_disk_gb": 665.2
+}

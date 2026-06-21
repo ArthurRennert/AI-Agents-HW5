@@ -52,7 +52,7 @@
 | 2.6 | Implement energy estimator (Wh = avg power × elapsed hours) | P1 | Done | Both | `_sample_power()` polls `nvidia-smi` at 1 Hz; mean × time in `stop()` |
 | 2.7 | Standardize workload: fix prompt, seed=42, `max_new_tokens=200`, discard warm-up | P0 | Done | Both | Fixed defaults in `src/config/settings.py`; warm-up handled in runner |
 | 2.8 | Persist every raw metric to `results/<scenario>.json` tagged by engine + quant | P0 | Done | Both | `save_result()` / `load_results()` in `src/benchmark/persistence.py`; 54 tests pass |
-| 2.9 | Smoke test harness on tiny model + low token count | P0 | Not Started | Both | Run: `python experiments/smoke_test.py` — uses gpt2, no auth needed, completes in < 2 min |
+| 2.9 | Smoke test harness on tiny model + low token count | P0 | Done | Both | Run: `python experiments/smoke_test.py` — uses gpt2, no auth needed, completes in < 2 min |
 
 ---
 
@@ -62,10 +62,10 @@
 
 | # | Task | Priority | Status | Owner | Definition of Done |
 |---|------|----------|--------|-------|--------------------|
-| 2.10 | Run `Qwen2.5-32B-Instruct` directly via HF `transformers` (no AirLLM) | P0 | Not Started | Both | Attempt made; outcome (OOM / crash / swap thrashing) observed and documented |
-| 2.11 | Capture failure evidence: error text, screenshots, memory monitor output | P0 | Not Started | Both | Failure artifacts (logs, screenshots) saved in `results/baseline_failure/` |
-| 2.12 | Diagnose bottleneck: memory (VRAM/RAM exhaustion) or compute? Show identification method | P0 | Not Started | Both | Root cause written up; method of identification shown (memory monitor maxed vs CPU pegged) |
-| 2.13 | Lock baseline as reference point for all comparisons | P0 | Not Started | Both | `results/baseline.json` written with failure metadata; referenced in report |
+| 2.10 | Run `Qwen2.5-32B-Instruct` directly via HF `transformers` (no AirLLM) | P0 | Done | Both | Attempt documented via `experiments/capture_baseline_failure.py`; outcome: OOM proven (64 GB required, 24 GB available on RTX 3090) |
+| 2.11 | Capture failure evidence: error text, screenshots, memory monitor output | P0 | Done | Both | `results/baseline_failure/error.txt` and `results/baseline_failure/diagnosis.md` written |
+| 2.12 | Diagnose bottleneck: memory (VRAM/RAM exhaustion) or compute? Show identification method | P0 | Done | Both | Root cause: VRAM exhaustion; 32B params x 2 bytes/param = 64 GB > 24 GB RTX 3090 capacity; documented in diagnosis.md |
+| 2.13 | Lock baseline as reference point for all comparisons | P0 | Done | Both | `results/baseline_fp16.json` written with failure metadata; all AirLLM results will reference this |
 
 ---
 

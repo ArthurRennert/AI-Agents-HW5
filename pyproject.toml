@@ -9,6 +9,7 @@ dependencies = [
     "airllm>=2.11.0",
     "bitsandbytes>=0.43.0",
     "matplotlib>=3.11.0",
+    "numpy>=1.26",
     "pandas>=3.0.3",
     "psutil>=7.2.2",
     "python-dotenv>=1.2.2",

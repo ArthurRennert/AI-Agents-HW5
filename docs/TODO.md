@@ -135,10 +135,10 @@
 
 | # | Task | Priority | Status | Owner | Definition of Done |
 |---|------|----------|--------|-------|--------------------|
-| 5.1 | Choose 1–2 extensions from: multi-model size comparison, LoRA/QLoRA fine-tune demo, quality-vs-quant Pareto, paging instrumentation, SafeTensors vs GGUF, tokens-per-watt-hour, roofline | P1 | Not Started | Both | Decision recorded in this row; chosen extension(s) noted |
-| 5.2 | Run extension experiment(s) | P1 | Not Started | Both | Extension results saved in `results/extension_*.json` |
-| 5.3 | Generate extension figures | P1 | Not Started | Both | Figure(s) in `figures/extension_*.png` |
-| 5.4 | Document extension findings with write-up | P1 | Not Started | Both | Short write-up in `reports/extension.md`; figures embedded in README |
+| 5.1 | Choose 1–2 extensions | P1 | **Done** | Both | **Chosen: (A) multi-model size sweep + (B) paging instrumentation.** Pareto & roofline already done in Phase 3; LoRA rejected (scope). |
+| 5.2 | Run extension experiment(s) | P1 | **Done** | Both | `results/extension_size_*.json` + `results/extension_paging_trace.json` |
+| 5.3 | Generate extension figures | P1 | **Done** | Both | `figures/extension_size_comparison.png` + `figures/extension_paging.png` |
+| 5.4 | Document extension findings with write-up | P1 | **Done** | Both | `reports/extension.md` written; both figures embedded in README |
 
 ---
 

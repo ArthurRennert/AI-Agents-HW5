@@ -85,7 +85,7 @@ AI-Agents-HW5/
 | Phase 2 | Measurement harness, baseline execution (capture OOM/failure) |
 | Phase 3 | AirLLM runner, quantization sweep (FP16 → Q8 → Q4 → Q2), graphs |
 | Phase 4 | Economic analysis (API vs on-prem break-even), concept analysis |
-| Phase 5 | Original extension (TBD) |
+| Phase 5 | Original extensions: multi-model size sweep + paging instrumentation |
 | Phase 6 | Technical report, README completion, final QA |
 
 ---
@@ -141,6 +141,40 @@ python experiments/generate_figures.py
 
 ```bash
 pytest --cov=src --cov-report=term-missing
+```
+
+---
+
+## Phase 5 — Original Extensions
+
+Two complementary extensions (full write-up: `reports/extension.md`). Both run on
+the profiled CPU-only machine (16.8 GB RAM, NVMe).
+
+### A. Multi-model size sweep — the bottleneck shifts with size
+
+The RAM wall is first crossed at **7B** on this machine: 1.5B/3B run directly,
+7B and above cannot be held resident. AirLLM keeps peak RAM bounded (~3 GB, flat)
+but trades it for NVMe read bandwidth, so per-token latency scales almost
+linearly with size (TPOT 1.2 s at 1.5B -> 19.0 s at 32B).
+
+![Size sweep](figures/extension_size_comparison.png)
+
+```bash
+python experiments/run_size_comparison.py
+```
+
+### B. Paging instrumentation — AirLLM *is* OS virtual memory
+
+A real `mmap` + `madvise(MADV_DONTNEED)` layer-paging run (24 layers x 96 MB)
+produces a genuine RSS sawtooth and **14,099 measured page faults** — each layer
+pages in, computes, then pages out. This is the demand-paging mechanic AirLLM
+relies on, demonstrated on real hardware rather than asserted.
+
+![Paging sawtooth](figures/extension_paging.png)
+
+```bash
+python experiments/run_paging_demo.py
+python experiments/generate_extension_figures.py
 ```
 
 ---

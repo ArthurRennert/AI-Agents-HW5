@@ -1,0 +1,21 @@
+{
+  "extension": "size_sweep",
+  "ram_gb": 16.8,
+  "assumptions": {
+    "bytes_per_param_fp16": 2,
+    "baseline_overhead": 1.2,
+    "nvme_read_gb_s": 3.5,
+    "cpu_compute_s_per_token": 0.3
+  },
+  "name": "Qwen2.5-1.5B-Instruct",
+  "param_billions": 1.54,
+  "n_layers": 28,
+  "fp16_disk_gb": 3.08,
+  "baseline_required_gb": 3.7,
+  "fits_baseline": true,
+  "baseline_outcome": "fits_in_ram",
+  "airllm_peak_ram_gb": 2.61,
+  "disk_read_per_token_gb": 3.08,
+  "est_tpot_s": 1.18,
+  "bottleneck": "none (direct execution viable)"
+}

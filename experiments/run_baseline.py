@@ -35,12 +35,46 @@ def main() -> None:
     print(f"  Peak VRAM : {record.metrics.peak_vram_gb:.2f} GB")
     print(f"  Wall clock: {record.metrics.wall_clock_sec:.2f} s")
 
-    failure_dir = Path(RESULTS_DIR) / "baseline_failure"
-    if failure_dir.exists():
-        print(f"\n[baseline] Failure evidence: {failure_dir}/error.txt")
-        print("[baseline] BOTTLENECK IDENTIFIED — see error.txt for details.")
+    failed = record.output.generated_text.startswith("ERROR:")
+    phys_ram_gb, vram_gb = _physical_ram_gb(), _vram_gb()
+    peak_ram = record.metrics.peak_ram_gb
+    peak_vram = record.metrics.peak_vram_gb
+    ttft_s = record.metrics.ttft_ms / 1000.0
+
+    if failed:
+        failure_dir = Path(RESULTS_DIR) / "baseline_failure"
+        print(f"\n[baseline] Direct load FAILED (CUDA/OOM) — bottleneck hit.")
+        print(f"[baseline] Failure evidence: {failure_dir}/error.txt")
+    elif vram_gb and peak_vram > vram_gb:
+        print(f"\n[baseline] VRAM BOTTLENECK: peak VRAM {peak_vram:.1f} GB exceeds the "
+              f"{vram_gb:.1f} GB on the GPU — overflow spilled to shared system memory.")
+        print(f"[baseline] TTFT {ttft_s:.0f}s is non-viable: the model only 'runs' via "
+              f"driver memory fallback. AirLLM (bounded VRAM) is required.")
+    elif peak_ram > phys_ram_gb:
+        print(f"\n[baseline] MEMORY BOTTLENECK (swap thrash): peak {peak_ram:.1f} GB "
+              f"exceeds physical {phys_ram_gb:.1f} GB — overflow paged to disk.")
+        print(f"[baseline] TTFT {ttft_s:.0f}s is non-viable. AirLLM is required.")
     else:
-        print("[baseline] Model loaded successfully (unexpected for 32B on 24 GB VRAM).")
+        print(f"\n[baseline] Direct load fit (peak VRAM {peak_vram:.1f} GB / "
+              f"RAM {peak_ram:.1f} GB). Pick a larger model to show the bottleneck.")
+
+
+def _physical_ram_gb() -> float:
+    return _hw_field("ram_gb", 34.0)
+
+
+def _vram_gb() -> float:
+    return _hw_field("vram_gb", 24.0)
+
+
+def _hw_field(field: str, default: float) -> float:
+    try:
+        import json
+
+        return float(json.loads(
+            (Path(RESULTS_DIR) / "hardware.json").read_text())[field])
+    except Exception:
+        return default
 
 
 if __name__ == "__main__":

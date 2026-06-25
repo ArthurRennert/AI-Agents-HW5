@@ -13,8 +13,9 @@ dependencies = [
     "pandas>=3.0.3",
     "psutil>=7.2.2",
     "python-dotenv>=1.2.2",
-    "torch>=2.12.1",
-    "transformers>=5.12.1",
+    "sentencepiece>=0.2.0",
+    "torch>=2.11.0",  # newest cu128 (CUDA) wheel; GPU build for the RTX 3090
+    "transformers==4.44.2",  # airllm 2.11 needs this era (per-layer rotary, legacy cache)
 ]
 
 [project.optional-dependencies]
@@ -29,3 +30,16 @@ addopts = "--cov=src --cov-report=term-missing"
 
 [tool.coverage.run]
 source = ["src"]
+
+# --- CUDA PyTorch for the RTX 3090 (CUDA 12.8 build) -------------------------
+# Without this, PyPI serves the CPU-only torch wheel on Windows and the GPU is
+# unused. Routing torch through the cu128 index makes `uv lock`/`uv sync`/`uv run`
+# install the CUDA build. If cu128 fails to resolve for torch 2.12.1, change the
+# URL below to .../whl/cu130.
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cu128" }]

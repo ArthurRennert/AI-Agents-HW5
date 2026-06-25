@@ -29,7 +29,7 @@ def run_baseline(settings: Settings, results_dir: str = "results") -> ResultReco
         model = AutoModelForCausalLM.from_pretrained(
             settings.model_name,
             torch_dtype=torch.float16,
-            device_map="cuda",
+            device_map="cuda",  # 32B onto 24 GB VRAM -> CUDA OOM (the bottleneck)
             token=settings.hf_token,
         )
         harness.start()

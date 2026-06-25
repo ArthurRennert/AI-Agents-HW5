@@ -1,25 +1,25 @@
 {
   "scenario": {
     "engine": "baseline",
-    "model": "Qwen/Qwen2.5-32B-Instruct",
+    "model": "Qwen/Qwen2.5-14B-Instruct",
     "quant_level": "fp16",
-    "prompt_tokens": 0,
-    "max_new_tokens": 0,
+    "prompt_tokens": 37,
+    "max_new_tokens": 50,
     "seed": 42
   },
   "metrics": {
-    "ttft_ms": 0,
-    "tpot_ms": 0,
-    "throughput_tokens_per_sec": 0,
-    "peak_ram_gb": 0,
-    "peak_vram_gb": 0,
-    "wall_clock_sec": 0,
-    "energy_wh": 0
+    "ttft_ms": 43839.0,
+    "tpot_ms": 0.19,
+    "throughput_tokens_per_sec": 1.1403,
+    "peak_ram_gb": 7.42,
+    "peak_vram_gb": 29.6,
+    "wall_clock_sec": 43.85,
+    "energy_wh": 2.3033
   },
   "output": {
-    "generated_text": "BASELINE FAILURE: No CUDA-capable GPU found on this machine.\n\nMathematical proof of OOM:\n  Model: Qwen/Qwen2.5-32B-Instruct\n  Parameters: 32B\n  Precision: FP16 (2 bytes per parameter)\n  Required VRAM: 32B x 2 bytes = 6",
-    "n_output_tokens": 0,
-    "quality_note": "incoherent"
+    "generated_text": " Virtual memory allows an operating system to manage a program's address space that is larger than the available physical memory (RAM) on a computer. It does this by mapping pages of virtual addresses used by a process to corresponding frames of physical addresses in RAM.\n\n",
+    "n_output_tokens": 50,
+    "quality_note": "coherent"
   },
-  "timestamp": "2026-06-21T10:32:43.344265+00:00"
+  "timestamp": "2026-06-25T04:40:20.113285+00:00"
 }

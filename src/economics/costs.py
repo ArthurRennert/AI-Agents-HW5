@@ -18,15 +18,15 @@ class EconomicsConfig:
     api_output_usd_per_m: float = _GPT4O_OUTPUT_USD_PER_M
     api_provider: str = "OpenAI GPT-4o"
     api_price_date: str = "2026-06-21"
-    # On-prem hardware
-    gpu_cost_usd: float = 1500.0      # RTX 3090 used, 2026
+    # On-prem hardware — this is a CPU-only workstation (no GPU on the host)
+    gpu_cost_usd: float = 1000.0
     amortization_years: float = 3.0
-    electricity_usd_per_kwh: float = 0.12
-    gpu_power_watts: float = 350.0
+    electricity_usd_per_kwh: float = 0.6432
+    gpu_power_watts: float = 150.0    # whole-system draw under CPU inference (not a GPU)
     # Workload (one inference call)
-    prompt_tokens: int = 20
-    output_tokens: int = 200
-    wall_clock_sec: float = 1822.9    # Q4 AirLLM (best coherent level)
+    prompt_tokens: int = 37
+    output_tokens: int = 50
+    wall_clock_sec: float = 619.21
 
 
 @dataclass

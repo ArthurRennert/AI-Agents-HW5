@@ -7,7 +7,7 @@ from src.benchmark.harness import Harness
 from src.benchmark.persistence import OutputInfo, ResultRecord, ScenarioInfo, save_result
 from src.config.settings import Settings
 from src.hardware.profiler import check_disk_space
-from src.quantization.levels import estimate_disk_gb, get_bnb_config
+from src.quantization.levels import estimate_disk_gb, get_airllm_compression
 
 _QWEN_32B_PARAMS = 32.0  # billions
 
@@ -23,7 +23,8 @@ def run_experiment(settings: Settings, results_dir: str = "results") -> ResultRe
     tokenizer = AutoTokenizer.from_pretrained(
         settings.model_name, token=settings.hf_token
     )
-    input_ids = tokenizer(settings.prompt, return_tensors="pt")["input_ids"]
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    input_ids = tokenizer(settings.prompt, return_tensors="pt")["input_ids"].to(device)
     prompt_tokens = int(input_ids.shape[-1])
 
     model = _load_model(settings)
@@ -39,6 +40,7 @@ def run_experiment(settings: Settings, results_dir: str = "results") -> ResultRe
             max_new_tokens=settings.max_new_tokens,
             streamer=streamer,
             do_sample=False,
+            use_cache=False,  # AirLLM 2.11 predates transformers-5.x DynamicCache
         ),
         daemon=True,
     )
@@ -86,12 +88,16 @@ def _preflight(settings: Settings) -> None:
 
 def _load_model(settings: Settings):
     """Load the model via AirLLM AutoModel with the configured quantization."""
+    from src.runners.airllm_compat import install_bettertransformer_stub
+
+    install_bettertransformer_stub()  # must run before importing airllm
     from airllm import AutoModel
 
-    bnb_config = get_bnb_config(settings.quant_level)
-    return AutoModel.from_pretrained(
-        settings.model_name,
-        layer_shards_saving_path=settings.shard_path,
-        hf_token=settings.hf_token,
-        compression=bnb_config,
-    )
+    compression = get_airllm_compression(settings.quant_level)
+    kwargs = {
+        "layer_shards_saving_path": settings.shard_path,
+        "hf_token": settings.hf_token,
+    }
+    if compression is not None:
+        kwargs["compression"] = compression  # AirLLM wants '8bit'/'4bit', not a config
+    return AutoModel.from_pretrained(settings.model_name, **kwargs)

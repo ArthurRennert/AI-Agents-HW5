@@ -1,10 +1,10 @@
 {
-  "cpu_model": "Intel64 Family 6 Model 154 Stepping 4, GenuineIntel",
-  "cpu_cores": 10,
-  "cpu_threads": 12,
-  "ram_gb": 16.8,
-  "gpu_model": "none",
-  "vram_gb": 0.0,
+  "cpu_model": "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD",
+  "cpu_cores": 16,
+  "cpu_threads": 32,
+  "ram_gb": 34.2,
+  "gpu_model": "NVIDIA GeForce RTX 3090",
+  "vram_gb": 25.8,
   "storage_type": "NVMe/SSD",
-  "free_disk_gb": 665.2
+  "free_disk_gb": 231.1
 }

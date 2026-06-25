@@ -5,6 +5,25 @@ VALID_LEVELS = ("fp16", "q8", "q4", "q2")
 _BITS: dict[str, int] = {"fp16": 16, "q8": 8, "q4": 4, "q2": 2}
 
 
+def get_airllm_compression(quant_level: str):
+    """Map a quant level to AirLLM's `compression` string, or None for fp16.
+
+    AirLLM's bitsandbytes path accepts only '8bit' or '4bit'; 2-bit is not
+    available with this engine, so q2 raises.
+    """
+    _validate(quant_level)
+    if quant_level == "fp16":
+        return None
+    if quant_level == "q8":
+        return "8bit"
+    if quant_level == "q4":
+        return "4bit"
+    raise ValueError(
+        "AirLLM bitsandbytes compression supports only fp16/8bit/4bit; "
+        f"'{quant_level}' (2-bit) is not available with this engine."
+    )
+
+
 def get_bnb_config(quant_level: str):
     """Return a BitsAndBytesConfig for the given level, or None for fp16."""
     _validate(quant_level)

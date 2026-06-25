@@ -39,10 +39,12 @@ def profile_hardware(shard_path: str = "") -> HardwareProfile:
 
     free_disk_gb = 0.0
     storage_type = "unknown"
-    if shard_path:
-        usage = shutil.disk_usage(shard_path)
+    try:
+        usage = shutil.disk_usage(shard_path or ".")
         free_disk_gb = round(usage.free / 1e9, 1)
         storage_type = "NVMe/SSD"
+    except OSError:
+        pass
 
     return HardwareProfile(
         cpu_model=cpu_model,
